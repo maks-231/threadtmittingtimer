@@ -3,7 +3,7 @@ package org.timerthread;
 public class TimerThreadTest {
   public static void main(String[] args) {
 
-    TimerThread<PrintingStringTask> timerThread = new TimerThread<>(PrintingStringTask.class,10, 1000l, "Executing task!");
+    TimerThread<PrintingStringTask> timerThread = new TimerThread<>(new PrintingStringTask("Executing task!"),10, 1000l);
     timerThread.start();
     try {
       timerThread.join();

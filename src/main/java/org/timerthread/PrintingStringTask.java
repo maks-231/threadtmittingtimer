@@ -1,14 +1,10 @@
 package org.timerthread;
 
-public class PrintingStringTask extends Thread {
+public class PrintingStringTask implements Runnable {
   private String str;
 
   public PrintingStringTask(String str) {
     this.str = str;
-  }
-
-  public PrintingStringTask() {
-    this.str = "Empty task";
   }
 
   @Override

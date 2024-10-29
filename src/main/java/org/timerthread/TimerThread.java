@@ -1,18 +1,14 @@
 package org.timerthread;
 
-import java.lang.reflect.InvocationTargetException;
-
-public class TimerThread<T extends Thread> extends Thread {
+public class TimerThread<T extends Runnable> extends Thread {
   private Integer timesToRepeat;
   private Long delay;
-  private Class<T> clazz;
-  private String str;
+  private T task;
 
-  public TimerThread(Class<T> clazz, Integer timesToRepeat, Long delay, String str) {
+  public TimerThread(T task, Integer timesToRepeat, Long delay) {
+    this.task = task;
     this.timesToRepeat = timesToRepeat;
     this.delay = delay;
-    this.clazz = clazz;
-    this.str = str;
   }
 
   @Override
@@ -30,13 +26,10 @@ public class TimerThread<T extends Thread> extends Thread {
       start = System.currentTimeMillis();
 
       try {
-        T task = (T) clazz.getDeclaredConstructor(String.class).newInstance(str);
-        task.start();
-        task.join();
-      } catch (NoSuchMethodException | SecurityException
-               | InstantiationException | IllegalAccessException
-               | IllegalArgumentException | InvocationTargetException
-               | InterruptedException e) {
+        Thread thread = new Thread(task);
+        thread.start();
+        thread.join();
+      } catch (InterruptedException e) {
         System.out.println(e);
       }
       System.out.println();
